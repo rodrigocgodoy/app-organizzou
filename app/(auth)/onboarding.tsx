@@ -1,57 +1,55 @@
-import { Link } from 'expo-router';
-import styled from 'styled-components/native';
-import RadioGroup from 'react-native-radio-buttons-group';
-import { useMemo, useState } from 'react';
-import { useTheme } from '../../src/context/ThemeProvider';
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
 
-export default function Onboarding() {
-  const { handleChangeTypeTheme, typeTheme } = useTheme();
+import Link from '../../src/components/Link';
+import ButtonPrimary from '../../src/components/ButtonPrimary';
+import { content } from '../../src/supportPage/onboarding/content';
 
-  const radioButtons = useMemo(() => ([
-    {
-        id: 'system', // acts as primary key, should be unique and non-empty string
-        label: 'System',
-        value: 'system'
-    },
-    {
-        id: 'dark',
-        label: 'Dark',
-        value: 'dark'
-    },
-    {
-        id: 'light',
-        label: 'Light',
-        value: 'light'
+import {
+  Container,
+  ContentButtons,
+  ContentStep,
+  ImageStyled,
+  Info,
+  Step,
+  Subtitle,
+  Title,
+} from '../../src/supportPage/onboarding/styles';
+
+const Onboarding = () => {
+  const [step, setStep] = useState(0);
+  const router = useRouter();
+
+  const onNextStep = () => {
+    if (step === 2) {
+      router.replace('onboardingOption');
+    } else {
+      setStep((prev) => prev + 1);
     }
-  ]), []);
-
-  const onSelectRadioGroup = (value: 'dark' | 'light' | 'system'): void => {
-    handleChangeTypeTheme(value);
   };
 
   return (
     <Container>
-      <Link href="/login" asChild>
-        <Text>Login</Text>
-      </Link>
-      <RadioGroup 
-        radioButtons={radioButtons} 
-        onPress={onSelectRadioGroup}
-        selectedId={typeTheme}
-      />
+      <ImageStyled source={content[step].image} contentFit="contain" />
+      <Info>
+        <Title>{content[step].title}</Title>
+        <Subtitle>{content[step].subtitle}</Subtitle>
+        <ContentStep>
+          <Step active={step === 0} />
+          <Step active={step === 1} />
+          <Step active={step === 2} />
+        </ContentStep>
+      </Info>
+      <ContentButtons>
+        <Link href="/onboardingOptions">
+          Pular
+        </Link>
+        <ButtonPrimary onPress={onNextStep}>
+          Próximo
+        </ButtonPrimary>
+      </ContentButtons>
     </Container>
   );
-}
+};
 
-const Container = styled.SafeAreaView`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: ${({ theme }) => theme?.colors?.background};
-`;
-
-const Text = styled.Text`
-  color: ${({ theme }) => theme?.colors?.text};
-`;
+export default Onboarding;

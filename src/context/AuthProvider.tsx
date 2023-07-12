@@ -31,14 +31,11 @@ function useProtectedRoute(user: any) {
     const inAuthGroup = segments[0] === "(auth)";
 
     if (
-      // If the user is not signed in and the initial segment is not anything in the auth group.
       !user &&
       !inAuthGroup
     ) {
-      // Redirect to the sign-in page.
       router.replace("/onboarding");
     } else if (user && inAuthGroup) {
-      // Redirect away from the sign-in page.
       router.replace("/(tabs)/home");
     }
   }, [user, segments]);
@@ -49,25 +46,37 @@ export function AuthProvider({ children }: { children: JSX.Element }): JSX.Eleme
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // lógica para saber se o usuário está logado ou não
-    (async () => {
-      const accessToken = await AsyncStorage.getItem('accessToken');
-      const refreshToken = await AsyncStorage.getItem('refreshToken');
-      // console.log("🚀 ~ file: AuthProvider.tsx:50 ~ accessToken:", accessToken)
-      // console.log("🚀 ~ file: AuthProvider.tsx:51 ~ refreshToken:", refreshToken)
+    const abortController = new AbortController();
 
-      if (accessToken && refreshToken) {
-        api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        // Lógica para validar accessToken e se preciso atualiza-lo com o refreshToken
+    const fetchUser = async () => {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        const refreshToken = await AsyncStorage.getItem('refreshToken');
+  
+        if (accessToken && refreshToken) {
+          api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  
+          const { data: result } = await api.get('/users/me', {
+            signal: abortController.signal,
+          });
+  
+          setUser(result.user);
+        }
+  
+        setIsReady(true);
+        await SplashScreen.hideAsync();
+      } catch (error) {
+        if (abortController.signal.aborted) {
+          console.error("Data fetching cancelled");
+        } else {
+          console.error("🚀 ~ file: AuthProvider.tsx:72 ~ error:", error)
+        }
       }
+    };
+    
+    fetchUser();
 
-      await new Promise(resolve => setTimeout(resolve, 5000));
-
-      // console.warn('está feito');
-
-      setIsReady(true);
-      await SplashScreen.hideAsync();
-    })();
+    return 
   }, []);
 
   useProtectedRoute(user);

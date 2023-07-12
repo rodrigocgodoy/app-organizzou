@@ -1,6 +1,30 @@
+import primitives from './primitives';
+
 export default {
   colors: {
-    background: 'white',
-    text: 'green',
-  }
-}
+    textPrimary: primitives.gray0,
+    textSecundary: primitives.gray4,
+    textInverted: primitives.white,
+    textButtonPrimary: primitives.primary,
+    textButtonSecundary: primitives.gray3,
+    textLink: primitives.white,
+    borderColor1: primitives.gray6,
+    borderColor2: primitives.primary,
+    background: primitives.white,
+    background1: primitives.background1,
+    background2: primitives.background2,
+    background3: primitives.background3,
+    backgroundCard1: primitives.gray7,
+    backgroundCard2: primitives.gray7,
+    icon1: primitives.icon1,
+    icon2: primitives.icon2,
+    icon3: primitives.primary,
+    buttonPrimary: primitives.primary,
+    buttonSecundary: primitives.secundary,
+    buttonDisabled: primitives.gray7,
+    feedbackColorSuccess: primitives.feedbackColorSuccess,
+    feedbackColorInfo: primitives.feedbackColorInfo,
+    feedbackColorError: primitives.feedbackColorError,
+    feedbackColorWarning: primitives.feedbackColorWarning,
+  },
+};

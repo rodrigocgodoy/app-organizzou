@@ -1,88 +1,44 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { Appearance } from 'react-native';
-import * as Device from 'expo-device';
+import { useColorScheme } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type ThemeSelected = 'dark' | 'light';
+export type Theme = 'dark' | 'light';
 
 type ThemeType = 'dark' | 'light' | 'system';
 
 type ThemeContextData = {
-  currentTheme: ThemeSelected,
+  currentTheme: Theme,
   typeTheme: ThemeType,
-  handleChangeTheme: (theme: ThemeSelected) => void;
   handleChangeTypeTheme: (type: ThemeType) => void;
 }
 
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);
 
-export const ThemeProvider = ({ children }) => {
-  const [selectedTheme, setSelectedTheme] = useState<ThemeSelected>('dark');
+export const ThemeProvider = ({ children }: any) => {
   const [typeTheme, setTypeTheme] = useState<ThemeType>('system');
-
-  const colorScheme = Appearance.getColorScheme();
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     (async () => {
       const typeThemeStorage = await AsyncStorage.getItem('typeThemeStorage');
 
       if (typeThemeStorage) {
-        switch (typeThemeStorage) {
-          case 'system':
-            setSelectedTheme(colorScheme);
-            setTypeTheme('system');
-            break;
-          case 'dark':
-            setSelectedTheme('dark');
-            setTypeTheme('dark');
-            break;
-          case 'light':
-            setSelectedTheme('light');
-            setTypeTheme('light');
-            break;
-          default:
-            break;
-        }
+        setTypeTheme(typeThemeStorage as ThemeType);
       } else {
-        setSelectedTheme(colorScheme);
         setTypeTheme('system');
       }
     })();
-  }, []);
-
-  const handleChangeTheme = (theme: ThemeSelected): void => {
-    setSelectedTheme(theme);
-  }
+  }, [colorScheme]);
 
   const handleChangeTypeTheme = async (type: ThemeType): Promise<void> => {
+    await AsyncStorage.setItem('typeThemeStorage', type);
     setTypeTheme(type);
-    
-    switch (type) {
-      case 'system':
-        await AsyncStorage.setItem('typeThemeStorage', type);
-        setSelectedTheme(colorScheme);
-        setTypeTheme(type);
-        break;
-      case 'dark':
-        await AsyncStorage.setItem('typeThemeStorage', type);
-        setSelectedTheme('dark');
-        setTypeTheme(type);
-        break;
-      case 'light':
-        await AsyncStorage.setItem('typeThemeStorage', type);
-        setSelectedTheme('light');
-        setTypeTheme(type);
-        break;
-      default:
-        break;
-    }
   }
 
   return (
     <ThemeContext.Provider value={{
       typeTheme,
-      currentTheme: selectedTheme,
-      handleChangeTheme,
+      currentTheme: (typeTheme === 'system' ? colorScheme : typeTheme) as Theme,
       handleChangeTypeTheme,
     }}>
       {children}

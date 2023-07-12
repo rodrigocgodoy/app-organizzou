@@ -3,7 +3,7 @@ import { useTheme } from './ThemeProvider';
 import theme from '../styles';
 import { StatusBar } from 'expo-status-bar';
 
-export const ThemeProviderStyled = ({ children }) => {
+export const ThemeProviderStyled = ({ children }: any) => {
   const { currentTheme } = useTheme();
 
   return (

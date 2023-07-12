@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native';
 
-export default function Messages() {
+export default function Home() {
   return (
     <View>
-      <Text>Messages screen</Text>
+      <Text>Home screen</Text>
     </View>
   );
 }
