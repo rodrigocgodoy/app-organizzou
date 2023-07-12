@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://api.organizzou.com.br',
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded', 
-    Authorization: ''
+    'Content-Type': 'application/json', 
+    "Access-Control-Allow-Origin": "*",
   }
 });

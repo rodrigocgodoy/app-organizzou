@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import LinkBack from "../../src/components/LinkBack";
 import LogoImage from '../../assets/logo.svg';
@@ -11,6 +11,7 @@ import ButtonPrimary from "../../src/components/ButtonPrimary";
 import TextField from "../../src/components/TextField";
 import { api } from "../../src/config/api";
 import { useAuth } from "../../src/context/AuthProvider";
+import { regexPassword } from "../../src/utils/regex";
 
 import {
   Body,
@@ -22,20 +23,33 @@ import {
   Logo,
   Subtitle,
   Title,
-} from "../../src/supportPage/login/styles";
+  TextTerms,
+} from "../../src/supportPage/register/styles";
 
-const Login = () => {
+const Register = () => {
   const { setUser } = useAuth();
 
   const validationSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required('O nome não pode ser vazio'),
     email: yup
-    .string()
-    .required('O email não pode ser vazio')
-    .email('Digite um email válido'),
+      .string()
+      .required('O email não pode ser vazio')
+      .email('Digite um email válido'),
     password: yup
-    .string()
-    .required('A senha não pode ser vazia')
-    .min(8, 'A senha deve conter pelo menos 8 dígitos')
+      .string()
+      .required('A senha não pode ser vazia')
+      .matches(
+        regexPassword,
+        'Use dez ou mais caracteres com uma combinação de letras, números e símbolos'
+      ),
+    passwordRepeat: yup
+      .string()
+      .required('A senha não pode ser vazia')
+      .min(8, 'A senha deve conter pelo menos 8 dígitos')
+      // @ts-ignore
+      .oneOf([yup.ref("password"), null], "As senhas não combinam"),
   });
 
   const {
@@ -48,13 +62,16 @@ const Login = () => {
   });
 
   useEffect(() => {
+    register('name');
     register('email');
     register('password');
+    register('passwordRepeat');
   }, []);
 
   const onSubmit = async (data: any) => {
     try {
-      const { data: result } = await api.post('/auth/login/', data);
+      delete data.passwordRepeat;
+      const { data: result } = await api.post('/auth/register/', data);
       
       await AsyncStorage.setItem('accessToken', result?.accessToken);
       await AsyncStorage.setItem('refreshToken', result?.refreshToken);
@@ -74,13 +91,19 @@ const Login = () => {
         <Body>
           <Content>
             <Logo source={LogoImage} contentFit="contain" />
-            <Title>
-              Bem vindo de volta!
-            </Title>
-            <Subtitle>
-              Digite seu e-mail e senha para fazer login
-            </Subtitle>
+            <Title>Criar uma conta!</Title>
+            <Subtitle>Seja bem vindo!!</Subtitle>
             <Form>
+              <TextField
+                name="name"
+                label="Nome"
+                placeholder="Digite seu nome"
+                autoCorrect={false}
+                returnKeyType="next"
+                errorMessage={errors?.name?.message}
+                control={control}
+                editable={!isSubmitting}
+              />
               <TextField
                 name="email"
                 label="E-mail"
@@ -102,19 +125,34 @@ const Login = () => {
                 errorMessage={errors?.password?.message}
                 control={control}
                 editable={!isSubmitting}
+                showUpdatedRulesPassword
+              />
+              <TextField
+                name="passwordRepeat"
+                label="Repitir Senha"
+                placeholder="Repita sua senha"
+                secureTextEntry
+                textContentType="password"
+                errorMessage={errors?.passwordRepeat?.message}
+                control={control}
+                editable={!isSubmitting}
               />
             </Form>
-          </Content>
 
-          <ContentButtons>
-            <ButtonPrimary onPress={handleSubmit(onSubmit)}>
-              Entrar
-            </ButtonPrimary>
-          </ContentButtons>
+            <TextTerms>
+              Ao continuar, estou de acordo com os termos de uso e com o aviso de privacidade do organizzou.
+            </TextTerms>
+
+            <ContentButtons>
+              <ButtonPrimary onPress={handleSubmit(onSubmit)}>
+                Cadastrar-se
+              </ButtonPrimary>
+            </ContentButtons>
+          </Content>
         </Body>
       </KeyboardAwareScrollView>
     </Container>
   );
 };
 
-export default Login;
+export default Register;
