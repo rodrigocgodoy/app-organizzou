@@ -1,9 +1,11 @@
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { useTheme } from './ThemeProvider';
-import theme from '../styles';
 import { StatusBar } from 'expo-status-bar';
 
-export const ThemeProviderStyled = ({ children }: any) => {
+import { useTheme } from './ThemeProvider';
+import theme from '../styles';
+
+export const ThemeProviderStyled = ({ children }: { children: JSX.Element }) => {
   const { currentTheme } = useTheme();
 
   return (
@@ -11,5 +13,5 @@ export const ThemeProviderStyled = ({ children }: any) => {
       <StatusBar style={currentTheme === 'dark' ? 'light' : 'dark'} />
       {children}
     </ThemeProvider>
-  )
+  );
 };

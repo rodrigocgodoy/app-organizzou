@@ -1,6 +1,6 @@
-import { Ref, useCallback, useState } from "react";
-import { TextInput, TextInputProps } from "react-native";
-import { Controller } from "react-hook-form";
+import React, { Ref, useCallback, useState } from 'react';
+import { TextInput, TextInputProps } from 'react-native';
+import { Control, Controller, FieldValues } from 'react-hook-form';
 
 import {
   Content,
@@ -8,15 +8,15 @@ import {
   Label,
   Error,
   TextError,
-} from "./styles";
-import ListFeedbackRulePassword from "../ListFeedbackRulePassword";
-import IconInfoError from "../icons/infoError";
+} from './styles';
+import ListFeedbackRulePassword from '../ListFeedbackRulePassword';
+import IconInfoError from '../icons/infoError';
 
 type ITextField = {
   label?: string,
   errorMessage?: string,
   name: string,
-  control: any,
+  control: Control<FieldValues>,
   ref?: Ref<TextInput>,
   showUpdatedRulesPassword?: boolean,
 } & TextInputProps;
@@ -51,7 +51,7 @@ const TextField = ({
           <Input
             {...props}
             value={value}
-            onChangeText={(e: any) => {
+            onChangeText={(e: string) => {
               setValueText(e);
               onChange(e);
             }}
@@ -76,7 +76,7 @@ const TextField = ({
         <ListFeedbackRulePassword value={valueText} />
       )}
     </Content>
-  )
+  );
 };
 
 export default TextField;

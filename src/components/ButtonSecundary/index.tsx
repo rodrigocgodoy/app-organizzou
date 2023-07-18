@@ -1,4 +1,7 @@
-import { Button, Text } from "./styles";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+
+import { Button, Text } from './styles';
 
 const ButtonSecundary = ({ children, ...props }: any) => {
   return (

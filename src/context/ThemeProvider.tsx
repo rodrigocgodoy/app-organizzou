@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,7 +14,7 @@ type ThemeContextData = {
 
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);
 
-export const ThemeProvider = ({ children }: any) => {
+export const ThemeProvider = ({ children }: { children: JSX.Element }) => {
   const [typeTheme, setTypeTheme] = useState<ThemeType>('system');
   const colorScheme = useColorScheme();
 
@@ -33,7 +33,7 @@ export const ThemeProvider = ({ children }: any) => {
   const handleChangeTypeTheme = async (type: ThemeType): Promise<void> => {
     await AsyncStorage.setItem('typeThemeStorage', type);
     setTypeTheme(type);
-  }
+  };
 
   return (
     <ThemeContext.Provider value={{
@@ -43,7 +43,7 @@ export const ThemeProvider = ({ children }: any) => {
     }}>
       {children}
     </ThemeContext.Provider>
-  )
+  );
 };
 
 export const useTheme = (): ThemeContextData => {

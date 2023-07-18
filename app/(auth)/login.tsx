@@ -1,16 +1,17 @@
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useEffect } from "react";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup"
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import LinkBack from "../../src/components/LinkBack";
+import LinkBack from '../../src/components/LinkBack';
 import LogoImage from '../../assets/logo.svg';
-import ButtonPrimary from "../../src/components/ButtonPrimary";
-import TextField from "../../src/components/TextField";
-import { api } from "../../src/config/api";
-import { useAuth } from "../../src/context/AuthProvider";
+import ButtonPrimary from '../../src/components/ButtonPrimary';
+import TextField from '../../src/components/TextField';
+import { api } from '../../src/config/api';
+import { useAuth } from '../../src/context/AuthProvider';
+import { newToast } from '../../src/utils/toast';
 
 import {
   Body,
@@ -22,20 +23,20 @@ import {
   Logo,
   Subtitle,
   Title,
-} from "../../src/supportPage/login/styles";
+} from '../../src/supportPage/login/styles';
 
 const Login = () => {
   const { setUser } = useAuth();
 
   const validationSchema = yup.object().shape({
     email: yup
-    .string()
-    .required('O email não pode ser vazio')
-    .email('Digite um email válido'),
+      .string()
+      .required('O email não pode ser vazio')
+      .email('Digite um email válido'),
     password: yup
-    .string()
-    .required('A senha não pode ser vazia')
-    .min(8, 'A senha deve conter pelo menos 8 dígitos')
+      .string()
+      .required('A senha não pode ser vazia')
+      .min(8, 'A senha deve conter pelo menos 8 dígitos')
   });
 
   const {
@@ -52,7 +53,10 @@ const Login = () => {
     register('password');
   }, []);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: {
+    email: string;
+    password: string;
+  }) => {
     try {
       const { data: result } = await api.post('/auth/login/', data);
       
@@ -61,7 +65,7 @@ const Login = () => {
 
       setUser(result.user);
     } catch (error) {
-      console.error("🚀 ~ file: login.tsx:59 ~ onSubmit ~ error:", error)
+      newToast('Erro', 'E-mail ou senha incorretos', 'error');
     }
   };
 
@@ -107,7 +111,11 @@ const Login = () => {
           </Content>
 
           <ContentButtons>
-            <ButtonPrimary onPress={handleSubmit(onSubmit)}>
+            <ButtonPrimary
+              onPress={handleSubmit(onSubmit)}
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
               Entrar
             </ButtonPrimary>
           </ContentButtons>

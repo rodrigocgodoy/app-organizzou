@@ -1,7 +1,9 @@
+import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconExit() {
   const { currentTheme } = useTheme();
@@ -19,5 +21,5 @@ export default function IconExit() {
       <Path d="M15.75 9.625L13.875 11.5" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <Path d="M15.75 13.375L13.875 11.5" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}

@@ -1,17 +1,17 @@
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useEffect } from "react";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup"
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import LinkBack from "../../src/components/LinkBack";
+import LinkBack from '../../src/components/LinkBack';
 import LogoImage from '../../assets/logo.svg';
-import ButtonPrimary from "../../src/components/ButtonPrimary";
-import TextField from "../../src/components/TextField";
-import { api } from "../../src/config/api";
-import { useAuth } from "../../src/context/AuthProvider";
-import { regexPassword } from "../../src/utils/regex";
+import ButtonPrimary from '../../src/components/ButtonPrimary';
+import TextField from '../../src/components/TextField';
+import { api } from '../../src/config/api';
+import { useAuth } from '../../src/context/AuthProvider';
+import { regexPassword } from '../../src/utils/regex';
 
 import {
   Body,
@@ -24,7 +24,7 @@ import {
   Subtitle,
   Title,
   TextTerms,
-} from "../../src/supportPage/register/styles";
+} from '../../src/supportPage/register/styles';
 
 const Register = () => {
   const { setUser } = useAuth();
@@ -48,8 +48,7 @@ const Register = () => {
       .string()
       .required('A senha não pode ser vazia')
       .min(8, 'A senha deve conter pelo menos 8 dígitos')
-      // @ts-ignore
-      .oneOf([yup.ref("password"), null], "As senhas não combinam"),
+      .oneOf([yup.ref('password')], 'As senhas não combinam'),
   });
 
   const {
@@ -68,7 +67,12 @@ const Register = () => {
     register('passwordRepeat');
   }, []);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: {
+    name: string;
+    email: string;
+    password: string;
+    passwordRepeat?: string;
+  }) => {
     try {
       delete data.passwordRepeat;
       const { data: result } = await api.post('/auth/register/', data);
@@ -78,7 +82,7 @@ const Register = () => {
 
       setUser(result.user);
     } catch (error) {
-      console.error("🚀 ~ file: login.tsx:59 ~ onSubmit ~ error:", error)
+      console.error('🚀 ~ file: login.tsx:59 ~ onSubmit ~ error:', error);
     }
   };
 
@@ -138,17 +142,19 @@ const Register = () => {
                 editable={!isSubmitting}
               />
             </Form>
-
             <TextTerms>
               Ao continuar, estou de acordo com os termos de uso e com o aviso de privacidade do organizzou.
             </TextTerms>
-
-            <ContentButtons>
-              <ButtonPrimary onPress={handleSubmit(onSubmit)}>
-                Cadastrar-se
-              </ButtonPrimary>
-            </ContentButtons>
           </Content>
+          <ContentButtons>
+            <ButtonPrimary
+              onPress={handleSubmit(onSubmit)}
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Cadastrar-se
+            </ButtonPrimary>
+          </ContentButtons>
         </Body>
       </KeyboardAwareScrollView>
     </Container>

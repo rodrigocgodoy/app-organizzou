@@ -1,7 +1,9 @@
-import Svg, { Path, Rect } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+import React from 'react';
+import Svg, { Path } from 'react-native-svg';
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconInvitation() {
   const { currentTheme } = useTheme();
@@ -17,5 +19,5 @@ export default function IconInvitation() {
       <Path d="M9.99999 21V18.0866C9.99999 17.6539 9.85964 17.2328 9.59999 16.8866L7.92205 14.6494C7.6397 14.2729 7.20786 14.0375 6.73845 14.0041C6.26904 13.9708 5.80825 14.1427 5.47548 14.4755V14.4755C4.90424 15.0467 4.83997 15.9511 5.32469 16.5974L6.37664 18" stroke={color2} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <Path fill-rule="evenodd" clip-rule="evenodd" d="M13.555 10.356C13.1425 10.7683 12.5832 10.9999 12 11V11C11.4168 10.9999 10.8575 10.7683 10.445 10.356L7.80999 7.721C6.73 6.64101 6.73 4.88999 7.80999 3.81C8.88999 2.73001 10.641 2.73001 11.721 3.81L12 4.089L12.279 3.81C13.359 2.73001 15.11 2.73001 16.19 3.81C17.27 4.88999 17.27 6.64101 16.19 7.721L13.555 10.356Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}

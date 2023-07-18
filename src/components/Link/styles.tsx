@@ -1,9 +1,9 @@
-import { styled } from "styled-components/native";
-import { Link as LinkExpo } from "expo-router";
+import { styled } from 'styled-components/native';
+import { Link as LinkExpo } from 'expo-router';
 
 export const Button = styled(LinkExpo)`
   background-color: transparent;
-  padding: 9px 24px;
+  padding: 16px 24px;
 `;
 
 export const Text = styled.Text`

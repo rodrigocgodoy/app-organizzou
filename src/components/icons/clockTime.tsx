@@ -1,7 +1,9 @@
+import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconClockTime() {
   const { currentTheme } = useTheme();
@@ -16,5 +18,5 @@ export default function IconClockTime() {
       <Path d="M6.5 20.5L9 18L6.5 15.5" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <Path d="M16 12.5H11.5V7" stroke={color2} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}

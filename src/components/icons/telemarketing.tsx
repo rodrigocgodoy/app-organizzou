@@ -1,7 +1,9 @@
-import Svg, { Path, Rect } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+import React from 'react';
+import Svg, { Path } from 'react-native-svg';
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconTelemarketing() {
   const { currentTheme } = useTheme();
@@ -17,5 +19,5 @@ export default function IconTelemarketing() {
       <Path d="M18.5 10V9.5C18.5 5.91 15.59 3 12 3V3C8.41 3 5.5 5.91 5.5 9.5V10" stroke={color2} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <Path fill-rule="evenodd" clip-rule="evenodd" d="M12.625 21.25H11.375C10.685 21.25 10.125 20.69 10.125 20V20C10.125 19.31 10.685 18.75 11.375 18.75H12.625C13.315 18.75 13.875 19.31 13.875 20V20C13.875 20.69 13.315 21.25 12.625 21.25Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}

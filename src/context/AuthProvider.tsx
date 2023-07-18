@@ -1,13 +1,10 @@
-import { useSegments, useRouter } from "expo-router";
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useSegments, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { api } from "../config/api";
-import * as SplashScreen from 'expo-splash-screen';
 
-type User = {
-  name: string;
-  email: string;
-}
+import { api } from '../config/api';
+import * as SplashScreen from 'expo-splash-screen';
+import { User } from '../types/types';
 
 type AuthType = {
   user: User | null;
@@ -23,20 +20,20 @@ const AuthContext = createContext<AuthType>({
 
 export const useAuth = () => useContext(AuthContext);
 
-function useProtectedRoute(user: any) {
+function useProtectedRoute(user: User) {
   const segments = useSegments();
   const router = useRouter();
 
   useEffect(() => {
-    const inAuthGroup = segments[0] === "(auth)";
+    const inAuthGroup = segments[0] === '(auth)';
 
     if (
       !user &&
       !inAuthGroup
     ) {
-      router.replace("/onboarding");
+      router.replace('/onboarding');
     } else if (user && inAuthGroup) {
-      router.replace("/(tabs)/home");
+      router.replace('/(tabs)/settingsHome');
     }
   }, [user, segments]);
 }
@@ -56,6 +53,7 @@ export function AuthProvider({ children }: { children: JSX.Element }): JSX.Eleme
         if (accessToken && refreshToken) {
           api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   
+          // TODO: Validar access token
           const { data: result } = await api.get('/users/me', {
             signal: abortController.signal,
           });
@@ -65,18 +63,18 @@ export function AuthProvider({ children }: { children: JSX.Element }): JSX.Eleme
   
         setIsReady(true);
         await SplashScreen.hideAsync();
-      } catch (error) {
+      } catch (error: unknown) {
         if (abortController.signal.aborted) {
-          console.error("Data fetching cancelled");
+          console.error('Data fetching cancelled');
         } else {
-          console.error("🚀 ~ file: AuthProvider.tsx:72 ~ error:", error)
+          console.error('🚀 ~ file: AuthProvider.tsx:72 ~ error:', error);
         }
       }
     };
     
     fetchUser();
 
-    return 
+    return; 
   }, []);
 
   useProtectedRoute(user);
@@ -91,5 +89,5 @@ export function AuthProvider({ children }: { children: JSX.Element }): JSX.Eleme
     <AuthContext.Provider value={authContext}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }

@@ -1,11 +1,19 @@
-import { Link } from "expo-router";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+import { Link } from 'expo-router';
+import { LinkProps } from 'expo-router/src/link/Link';
 
-import { Button, Text } from "./styles";
+import { Button, Loading, Text } from './styles';
 
-const ButtonLinkPrimary = ({ children, ...props }: any) => {
+type ButtonLinkPrimaryType = {
+  loading?: boolean;
+} & LinkProps;
+
+const ButtonLinkPrimary = ({ children, loading, ...props }: ButtonLinkPrimaryType) => {
   return (
     <Link {...props} asChild>
-      <Button>
+      <Button disabled={props.disabled}>
+        {loading && <Loading disabled={props.disabled} />}
         <Text>{children}</Text>
       </Button>
     </Link>

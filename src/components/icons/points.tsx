@@ -1,7 +1,9 @@
+import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconPoints() {
   const { currentTheme } = useTheme();
@@ -17,5 +19,5 @@ export default function IconPoints() {
       <Path d="M19.271 6.73008C20.2477 7.7068 20.2477 9.29037 19.271 10.2671C18.2943 11.2438 16.7107 11.2438 15.734 10.2671C14.7573 9.29037 14.7573 7.7068 15.734 6.73008C16.203 6.26104 16.8392 5.99754 17.5025 5.99754C18.1658 5.99754 18.802 6.26104 19.271 6.73008" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <Path fill-rule="evenodd" clip-rule="evenodd" d="M6.93153 6.04459C6.35302 5.46607 6.35302 4.5281 6.93153 3.94958L8.45165 2.42947C9.03017 1.85095 9.96813 1.85095 10.5467 2.42947L12.0668 3.94958C12.6453 4.5281 12.6453 5.46607 12.0668 6.04459L10.5467 7.5647C9.96813 8.14322 9.03017 8.14322 8.45165 7.5647L6.93153 6.04459Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}

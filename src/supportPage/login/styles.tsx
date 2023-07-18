@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 import { Image } from 'expo-image';
 
 export const Container = styled.SafeAreaView`
@@ -24,10 +24,6 @@ export const ContentButtons = styled.View`
   display: flex;
   width: 100%;
   padding: 24px 20px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0%;
 `;
 
 export const Content = styled.View`

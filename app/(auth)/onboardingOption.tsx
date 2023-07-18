@@ -1,4 +1,4 @@
-
+import React from 'react';
 import OnboardingImage from '../../assets/onboardingOption.png';
 import LogoImage from '../../assets/logo-completed.svg';
 import ButtonLinkPrimary from '../../src/components/ButtonLinkPrimary';

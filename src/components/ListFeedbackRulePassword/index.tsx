@@ -1,8 +1,8 @@
-import { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import { Container, Item, ItemText } from "./styles";
-import IconFeedbackSuccess from "../icons/feedbackSuccess";
-import IconFeedbackError from "../icons/feedbackError";
+import { Container, Item, ItemText } from './styles';
+import IconFeedbackSuccess from '../icons/feedbackSuccess';
+import IconFeedbackError from '../icons/feedbackError';
 
 type ListFeedbackRulePasswordType = {
   value: string;

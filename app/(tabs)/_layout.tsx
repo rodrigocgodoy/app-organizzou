@@ -1,7 +1,10 @@
+import React from 'react';
 import { Slot } from 'expo-router';
 
-export default function Layout() {
+const LayoutTabs = () => {
   return (
     <Slot />
   );
-}
+};
+
+export default LayoutTabs;

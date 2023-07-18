@@ -1,7 +1,9 @@
+import React from 'react';
 import Svg, { Path, Rect } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconPrivacy() {
   const { currentTheme } = useTheme();
@@ -19,5 +21,5 @@ export default function IconPrivacy() {
       <Path d="M7.12201 11.7499C6.98401 11.7504 6.87254 11.8627 6.87291 12.0007C6.87327 12.1387 6.98534 12.2503 7.12334 12.2501C7.26134 12.2499 7.37311 12.138 7.37311 12C7.37338 11.9334 7.34698 11.8695 7.2998 11.8225C7.25262 11.7755 7.1886 11.7494 7.12201 11.7499" stroke={color2} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <Path d="M7.12201 15.7516C6.98401 15.7521 6.87254 15.8643 6.87291 16.0023C6.87327 16.1403 6.98534 16.252 7.12334 16.2518C7.26134 16.2516 7.37311 16.1397 7.37311 16.0017C7.37338 15.9351 7.34698 15.8712 7.2998 15.8242C7.25262 15.7772 7.1886 15.751 7.12201 15.7516" stroke={color2} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}

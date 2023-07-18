@@ -1,7 +1,10 @@
-import IconArrowLeft from "../icons/arrowLeft";
-import { Content, Text } from "./styles";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
 
-const LinkBack = ({ children, ...props }: any) => {
+import IconArrowLeft from '../icons/arrowLeft';
+import { Content, Text } from './styles';
+
+const LinkBack = ({ children }: any) => {
   return (
     <Content>
       <IconArrowLeft />

@@ -1,7 +1,9 @@
+import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconPreference() {
   const { currentTheme } = useTheme();
@@ -19,5 +21,5 @@ export default function IconPreference() {
       <Path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 7C9.75 6.58579 9.41421 6.25 9 6.25C8.58579 6.25 8.25 6.58579 8.25 7V12.75H7.5C7.08579 12.75 6.75 13.0858 6.75 13.5C6.75 13.9142 7.08579 14.25 7.5 14.25H9H10.5C10.9142 14.25 11.25 13.9142 11.25 13.5C11.25 13.0858 10.9142 12.75 10.5 12.75H9.75V7Z" fill={color}/>
       <Path fill-rule="evenodd" clip-rule="evenodd" d="M8 21C5.23858 21 3 18.7614 3 16L3 8C3 5.23858 5.23858 3 8 3H16C18.7614 3 21 5.23858 21 8V16C21 18.7614 18.7614 21 16 21H8Z" stroke={color2} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}

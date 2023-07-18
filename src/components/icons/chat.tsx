@@ -1,7 +1,9 @@
-import Svg, { Path, Rect } from 'react-native-svg';
-import { useTheme } from "../../context/ThemeProvider";
-import dark from "../../styles/dark";
-import light from "../../styles/light";
+import React from 'react';
+import Svg, { Path } from 'react-native-svg';
+
+import { useTheme } from '../../context/ThemeProvider';
+import dark from '../../styles/dark';
+import light from '../../styles/light';
 
 export default function IconChat() {
   const { currentTheme } = useTheme();
@@ -15,5 +17,5 @@ export default function IconChat() {
       <Path d="M16 12H8" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       <Path d="M8 8H16" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
-  )
-};
+  );
+}
